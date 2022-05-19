@@ -1,0 +1,6 @@
+#!/bin/bash
+
+nohup ./auto_fetch.sh >fetch.log 2>&1 &
+
+pgrep -f auto_fetch > pid.txt
+

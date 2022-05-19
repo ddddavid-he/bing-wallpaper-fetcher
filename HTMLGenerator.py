@@ -257,7 +257,7 @@ class Generator:
             "\t\t\t\tfont-weight: normal;\"",
             "\t\t>",
             "\t\t\t<h3 align=\"center\">",
-            f"\t\t\t\t<b>{title}:&nbsp;</b>",
+            f"\t\t\t\t「{title}」:&nbsp;",
             f"\t\t\t\t{description} &nbsp;",
             f"\t\t\t\t<a href=\"BW-{date}.jpg\" download=\"\">",
             "\t\t\t\t\tDownload",

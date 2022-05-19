@@ -1,9 +1,12 @@
-
+"""
+By Ddddavid 
+2022-05-20
+"""
 
 import os
 import argparse
 import requests as re
-import wget
+#import wget
 import joblib as jbl
 from HTMLGenerator import Generator as HG
 
@@ -168,11 +171,12 @@ if image_on:
 
     for date, url in zip(src['date'], src['url']):
         if f'{img_prefix}-{date[2:]}.jpg' not in downloaded_imgs:
-            wget.download(url, out=f'{cache_dir}/img_cache')
+            # wget.download(url, out=f'{cache_dir}/img_cache')
+            os.system(f'wget -O {cache_dir}/img_cache {url}')
             """
             TODO: needed to add error detection
             """
-            os.rename(f'{cache_dir}/img_cache', f'{img_dir}/{img_prefix}-{date[2:]}.jpg')
+            os.system(f'mv {cache_dir}/img_cache  {img_dir}/{img_prefix}-{date[2:]}.jpg')
             print(f'-> {img_prefix}-{date[2:]} downloaded.')
         else:
             ...
@@ -201,7 +205,7 @@ if html_on:
         os.system(f'cp {cache_dir}/page-*.html {html_dir}/')
                     
 
-    print(f'->{html_dir}/index.html generated \n ->{num} {html_dir}/page-*.html has been generated.')
+    print(f'->{html_dir}/index.html generated \n->{num} {html_dir}/page-*.html has been generated.')
 else:
     print('-> html generation skipped')
 
