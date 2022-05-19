@@ -1,0 +1,10 @@
+**/.DS_Store
+**/*.html
+**/img_cache*
+backup/*
+wallpaper/html/*
+wallpaper/images/*
+cache/*
+__pycache__
+
+
