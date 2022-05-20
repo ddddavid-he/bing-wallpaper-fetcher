@@ -2,8 +2,7 @@
 **/*.html
 **/img_cache*
 backup/*
-wallpaper/html/*
-wallpaper/images/*
+wallpaper
 cache/*
 __pycache__
 
