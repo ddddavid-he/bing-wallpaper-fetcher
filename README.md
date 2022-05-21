@@ -1,12 +1,12 @@
 # bing-wallpaper-fetcher
 Automatically download bing wallpaper at a resolution of 4K+
 
-## Requirment
+## Requirments
 - Python 3
 - Python packages:  requests, argparse, pandas
 - `start` and `stop` scripts only work on Linux and macOS
 
-## usage
+## Usage
 - run `python3 fetch.py` do everything
 - `HTMLGenerator.py` file create webpages for the wallpapers, to avoid that use `--no-html` or `--image-only`
 - by using `--no-image` along with  `--no-html`, the script updates `source_list.jbl` only   
