@@ -1,21 +1,18 @@
 """
 By Ddddavid 
-2022-05-20
+2022-05-21
 """
 
 import os
-# import shutil as sh
-# from glob import glob
-import FileOperations as fo
 import time
 import argparse
 import requests as re
 import pandas as pd
+import FileOperations as fo
 from HTMLGenerator import Generator as HG
 
 
 
-# data_base = "./source_list.jbl"
 data_base = "./source_list.csv"
 img_dir = "./wallpaper/images"
 html_dir = "./wallpaper/html"
@@ -54,9 +51,6 @@ ap.add_argument('--column-number', type=int, default=3, help='网页中一行的
 ap.add_argument('--no-history', action='store_true', help='Caution! Stop loading source list.')
 ap.add_argument('--no-backup', action='store_true', help='不备份数据库')
 ap.add_argument('--use-wget', action='store_true', help='使用系统wget下载数据')
-# ap.add_argument('--add-item', type=str, nargs='+', help='手动添加项目（json格式）')
-# ap.add_argument('--sort-item', action='store_true', help='对item排序')
-# TODO: 添加排序功能
 
 args = ap.parse_args()
 if args.image_only and (not args.html_only):
@@ -121,18 +115,16 @@ print('>' * MSG_LEN)
 #   'date':[date], 'url':[url],
 #   'description':[description], 'title':[title]
 # }
-# newer one rank higher
 if os.path.exists(data_base) and (not args.no_history):
     src = pd.read_csv(data_base, index_col=0, encoding='utf8')
     src = src[['date', 'title', 'url', 'description']]
 else:
     src = pd.DataFrame({'date':[], 'url':[], 'description':[], 'title':[]})
-# newer one at behind
 src['date'] = src['date'].apply(lambda x: int(x))
 
 
 
-## find updates
+## update database
 print(f'-> ({stime()}) request to bing.com sent')
 response = re.get(re_url).json()
 img_jss = response['images']
@@ -181,7 +173,6 @@ for row in range(src['date'].size):
         ...
 src.reset_index(drop=True, inplace=True)
 print(f"-> ({stime()}) {oc} old item{'s' if oc>1 else ''} pruned")
-# jbl.dump(src, data_base)
 src.to_csv(data_base, encoding='utf8')
 print(f"-> ({stime()}) new source list saved, {nc} item{'s' if nc>1 else ''} added")
 
@@ -238,8 +229,6 @@ else:
 if not args.keep_cache:
     fo.rm(f'{cache_dir}/img_cache')
     fo.rm(f'{cache_dir}/*.html')
-    # os.system(f'rm -f {cache_dir}/img_cache*')
-    # os.system(f'rm -f {cache_dir}/*.html')
 else:
     ...
 
