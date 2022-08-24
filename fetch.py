@@ -29,6 +29,10 @@ def stime():
     return time.strftime('%H:%M:%S')
 
 
+def notify(message):
+    print(f'-> ({stime()}) {message}')
+
+
 def add2Backup(src):
     if os.path.exists(f'{backup_dir}/{database}.bak'):
         bak = pd.read_csv(f'{backup_dir}/{database}.bak', index_col=0, encoding='utf8')
@@ -125,11 +129,11 @@ src['date'] = src['date'].apply(lambda x: int(x))
 
 
 ## update database
-print(f'-> ({stime()}) request to bing.com sent')
+notify('request to bing.com sent')
 response = re.get(re_url).json()
 img_jss = response['images']
 
-print(f'-> ({stime()}) response from bing.com received')
+notify('response from bing.com received')
 
 
 
@@ -156,12 +160,12 @@ src.sort_values('date', ascending=False, inplace=True, ignore_index=True)
 src.reset_index(drop=True, inplace=True)
 src['date'] = src['date'].apply(lambda x: str(x))
 nc = new_list.shape[0]
-print(f"-> ({stime()}) {nc} new item{'s' if nc>1 else ''} added")
+notify(f"{nc} new item{'s' if nc>1 else ''} added")
 # newer one at the front
 
 if not args.no_backup:
     add2Backup(src) # backup old src
-    print(f'-> ({stime()}) backup done')
+    notify('backup done')
 # prune items older than one year
 y_now = int(src['date'][0])
 oc = 0
@@ -172,9 +176,9 @@ for row in range(src['date'].size):
     else:
         ...
 src.reset_index(drop=True, inplace=True)
-print(f"-> ({stime()}) {oc} old item{'s' if oc>1 else ''} pruned")
+notify(f"{oc} outdated item{'s' if oc>1 else ''} pruned")
 src.to_csv(database, encoding='utf8')
-print(f"-> ({stime()}) new source list saved, {nc} item{'s' if nc>1 else ''} added")
+notify(f"new source list saved, {nc} item{'s' if nc>1 else ''} added")
 
 
 
@@ -191,11 +195,11 @@ if image_on:
                     f.write(r.content)
                 r.close()
             fo.mv(f'{cache_dir}/img_cache', f'{img_dir}/{img_prefix}-{date[2:]}.jpg')
-            print(f'-> ({stime()}) {img_prefix}-{date[2:]} downloaded.')
+            notify(f'{img_prefix}-{date[2:]} downloaded')
         else:
             ...
 else:
-    print(f'-> ({stime()}) image downloading skipped')
+    notify(f'image downloading skipped')
 
 
 ## generate html files 
@@ -220,10 +224,10 @@ if html_on:
         
                     
 
-    print(f'-> ({stime()}) {html_dir}/index.html generated')
-    print(f'-> ({stime()}) {num} {html_dir}/page-*.html has been generated.')
+    notify(f'{html_dir}/index.html generated')
+    notify(f'{num} {html_dir}/page-*.html has been generated')
 else:
-    print(f'-> ({stime()}) html generation skipped')
+    notify(f'html generation skipped')
 
 
 if not args.keep_cache:
