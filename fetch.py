@@ -13,7 +13,7 @@ from HTMLGenerator import Generator as HG
 
 
 
-data_base = "./source_list.csv"
+database = "./source_list.csv"
 img_dir = "./wallpaper/images"
 html_dir = "./wallpaper/html"
 cache_dir = "./cache"
@@ -30,13 +30,13 @@ def stime():
 
 
 def add2Backup(src):
-    if os.path.exists(f'{backup_dir}/{data_base}.bak'):
-        bak = pd.read_csv(f'{backup_dir}/{data_base}.bak', index_col=0, encoding='utf8')
+    if os.path.exists(f'{backup_dir}/{database}.bak'):
+        bak = pd.read_csv(f'{backup_dir}/{database}.bak', index_col=0, encoding='utf8')
         bak = pd.concat([bak, src], axis=0)
         bak.drop_duplicates(['date'], keep='first', inplace=True)
     else:
         bak = src
-    bak.to_csv(f'{backup_dir}/{data_base}.bak', encoding='utf8')
+    bak.to_csv(f'{backup_dir}/{database}.bak', encoding='utf8')
     
 
 
@@ -115,8 +115,8 @@ print('>' * MSG_LEN)
 #   'date':[date], 'url':[url],
 #   'description':[description], 'title':[title]
 # }
-if os.path.exists(data_base) and (not args.no_history):
-    src = pd.read_csv(data_base, index_col=0, encoding='utf8')
+if os.path.exists(database) and (not args.no_history):
+    src = pd.read_csv(database, index_col=0, encoding='utf8')
     src = src[['date', 'title', 'url', 'description']]
 else:
     src = pd.DataFrame({'date':[], 'url':[], 'description':[], 'title':[]})
@@ -173,7 +173,7 @@ for row in range(src['date'].size):
         ...
 src.reset_index(drop=True, inplace=True)
 print(f"-> ({stime()}) {oc} old item{'s' if oc>1 else ''} pruned")
-src.to_csv(data_base, encoding='utf8')
+src.to_csv(database, encoding='utf8')
 print(f"-> ({stime()}) new source list saved, {nc} item{'s' if nc>1 else ''} added")
 
 
