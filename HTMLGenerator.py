@@ -132,7 +132,7 @@ class Generator:
         code += "\t\t<h5 class=\"img-title\">\n"
         # code += f"\t\t\t<a href=\"{url}\">{full_date}</a>\n"
         code += f"\t\t\t{full_date} &nbsp;\n"
-        code += f"\t\t\t<a href={subpage} target=\"_blank\">View Detail</a> &nbsp;\n"
+        code += f"\t\t\t<a href={subpage} target=\"_blank\">See Details</a> &nbsp;\n"
         code += f"\t\t\t<a href=\"BW-{date}.jpg\" download=\"\">Download 4K</a>\n"
         code += "\t\t</h5>\n"
         code += "\t</div>\n"
@@ -206,13 +206,14 @@ class Generator:
 
 
     def genSubpage(self, date, url, title, description):
+        long_date = f"{date[:4]}-{date[4:6]}-{date[6:]}"
         date = date[2:]
         code = [
             "<!DOCTYPE html>",
             "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"\" xml:lang=\"\">",
             "<head>",
             "\t<meta charset=\"utf-8\">",
-            "\t<title>BW</title>",
+            f"\t<title>{long_date}</title>",
             "</head>",
             "",
             "<br><br>",
