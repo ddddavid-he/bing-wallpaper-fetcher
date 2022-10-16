@@ -35,12 +35,12 @@ def notify(message):
 
 def add2Backup(src):
     if os.path.exists(f'{backup_dir}/{database}.bak'):
-        bak = pd.read_csv(f'{backup_dir}/{database}.bak', index_col=0, encoding='utf8')
+        bak = pd.read_csv(f'{backup_dir}/{database}.bak', encoding='utf8')
         bak = pd.concat([bak, src], axis=0)
         bak.drop_duplicates(['date'], keep='first', inplace=True)
     else:
         bak = src
-    bak.to_csv(f'{backup_dir}/{database}.bak', encoding='utf8')
+    bak.to_csv(f'{backup_dir}/{database}.bak', index=False, encoding='utf8')
     
 
 
@@ -120,7 +120,7 @@ print('>' * MSG_LEN)
 #   'description':[description], 'title':[title]
 # }
 if os.path.exists(database) and (not args.no_history):
-    src = pd.read_csv(database, index_col=0, encoding='utf8')
+    src = pd.read_csv(database, encoding='utf8')
     src = src[['date', 'title', 'url', 'description']]
 else:
     src = pd.DataFrame({'date':[], 'url':[], 'description':[], 'title':[]})
@@ -177,7 +177,7 @@ for row in range(src['date'].size):
         ...
 src.reset_index(drop=True, inplace=True)
 notify(f"{oc} outdated item{'s' if oc>1 else ''} pruned")
-src.to_csv(database, encoding='utf8')
+src.to_csv(database, index=False, encoding='utf8')
 notify(f"new source list saved, {nc} item{'s' if nc>1 else ''} added")
 
 
