@@ -117,7 +117,7 @@ class Generator:
         small_url = f"{url}{self.small_req}"
         small_url = small_url.replace('WIDTH', str(resolution[0]))
         small_url = small_url.replace('HEIGHT', str(resolution[1]))
-        subpage = f"page-{date}.html"
+        subpage = f"subpages/page-{date}.html"
         if lazy:
             loading = "loading=\"lazy\""
         else:
@@ -133,7 +133,7 @@ class Generator:
         # code += f"\t\t\t<a href=\"{url}\">{full_date}</a>\n"
         code += f"\t\t\t{full_date} &nbsp;\n"
         code += f"\t\t\t<a href={subpage} target=\"_blank\">See Details</a> &nbsp;\n"
-        code += f"\t\t\t<a href=\"BW-{date}.jpg\" download=\"\">Download 4K</a>\n"
+        code += f"\t\t\t<a href=\"images/BW-{date}.jpg\" download=\"\">Download 4K</a>\n"
         code += "\t\t</h5>\n"
         code += "\t</div>\n"
         return code
@@ -148,7 +148,7 @@ class Generator:
         code = ""
         code += "\t<div class=\"today-item-container\">\n"
         code += "\t\t<div class=\"img-container\">\n"
-        code += f"\t\t\t<a href=\"page-{date}.html\" target=\"_blank\">"
+        code += f"\t\t\t<a href=\"subpages/page-{date}.html\" target=\"_blank\">"
         code += f"\t\t\t\t<img src={small_url} alt=\"\">\n"
         code += "\t\t\t</a>"
         code += "\t\t</div>\n"
@@ -248,7 +248,7 @@ class Generator:
             "\t\t\t<h3 align=\"center\">",
             f"\t\t\t\t「{title}」:&nbsp;",
             f"\t\t\t\t{description} &nbsp;",
-            f"\t\t\t\t<a href=\"BW-{date}.jpg\" download=\"\">",
+            f"\t\t\t\t<a href=\"../images/BW-{date}.jpg\" download=\"\">",
             "\t\t\t\t\tDownload",
             "\t\t\t\t</a>",
             "\t\t\t</h3>",

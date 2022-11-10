@@ -15,7 +15,7 @@ from HTMLGenerator import Generator as HG
 
 database = "./source_list.csv"
 img_dir = "./wallpaper/images"
-html_dir = "./wallpaper/html"
+subpages_dir = "./wallpaper/subpages"
 cache_dir = "./cache"
 backup_dir = "./backup"
 # re_url = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=10"
@@ -91,10 +91,10 @@ if os.path.exists(img_dir):
     ...
 else:
     os.makedirs(img_dir)
-if os.path.exists(html_dir):
+if os.path.exists(subpages_dir):
     ...
 else:
-    os.makedirs(html_dir)
+    os.makedirs(subpages_dir)
 if os.path.exists(cache_dir):
     ...
 else:
@@ -218,14 +218,15 @@ if html_on:
             
     if num > 0:
         fo.rm(f'{backup_dir}/html/*.html')
-        fo.mv(f'{html_dir}/*.html', f'{backup_dir}/html/')
-        fo.cp(f'{cache_dir}/index.html', f'{html_dir}/')
-        fo.cp(f'{cache_dir}/page-*.html', f'{html_dir}/')
+        fo.mv(f'{subpages_dir}/*.html', f'{backup_dir}/html/')
+        fo.mv(f'wallpaper/index.html', f'{backup_dir}/html/')
+        fo.cp(f'{cache_dir}/index.html', f'wallpaper/')
+        fo.cp(f'{cache_dir}/page-*.html', f'{subpages_dir}/')
         
                     
 
-    notify(f'{html_dir}/index.html generated')
-    notify(f'{num} {html_dir}/page-*.html has been generated')
+    notify(f'wallpaper/index.html generated')
+    notify(f'{num} {subpages_dir}/page-*.html has been generated')
 else:
     notify(f'html generation skipped')
 
