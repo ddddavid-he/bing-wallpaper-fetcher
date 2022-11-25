@@ -1,4 +1,8 @@
 # bing-wallpaper-fetcher
+<p align="center">
+    <a href="README_ZH.md"> 中文文档见此 </a>
+</p>
+
 Automatically download bing wallpaper at a resolution of 4K+
 
 ## Requirments
