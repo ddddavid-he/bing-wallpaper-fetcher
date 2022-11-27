@@ -104,7 +104,8 @@ class Generator:
             "\t</style>",
             "",
             "",
-            "\t</html>"
+            "",
+            "</html>"
         ]
         self.head = "\n".join(self.head)
         self.tail = "\n".join(self.tail)
@@ -126,7 +127,7 @@ class Generator:
         code += "\t<div class=\"item-container\">\n"
         code += "\t\t<div class=\"img-container\">\n"
         code += f"\t\t<a href={subpage} target=\"_blank\">"
-        code += f"\t\t\t<img src={small_url} alt=\"bing picture\" {loading}>\n"
+        code += f"\t\t\t<img src={small_url} alt=\"bing picture\" {loading} width={str(resolution[0])} height={str(resolution[1])}>\n"
         code += "\t\t</a>"
         code += "\t\t</div>\n"
         code += "\t\t<h5 class=\"img-title\">\n"
