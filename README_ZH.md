@@ -5,6 +5,8 @@
 
 以4K分辨率下载Bing壁纸的工具
 
+***有些壁纸仅有1080p的分辨率，是Bing网站的限制所致***
+
 ## 环境要求
 - Python 3
 - Python 包： requests、argparse、pandas

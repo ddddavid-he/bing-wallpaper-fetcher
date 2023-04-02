@@ -3,7 +3,9 @@
     <a href="README_ZH.md"> 中文文档见此 </a>
 </p>
 
-Automatically download bing wallpaper at a resolution of 4K+
+Automatically download bing wallpaper at a resolution of 4K+ 
+
+***Some images may have a resolution of 1080p***
 
 ## Requirments
 - Python 3
@@ -18,4 +20,4 @@ Automatically download bing wallpaper at a resolution of 4K+
 - ***using `--no-cache` option will DELETEs and rebuilds the `source_list` file. BE CAREFUL WHEN USING THIS OPTION!***
 - `--use-wget` option will use wget tool in system instead of Python requests package
 - `--no-bakup` option stops it from reading and writing `source_list.csv.bak`
-- other parameters works as what their name idicates
+- other parameters works as what their name indicates
