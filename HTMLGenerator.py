@@ -134,7 +134,7 @@ class Generator:
         # code += f"\t\t\t<a href=\"{url}\">{full_date}</a>\n"
         code += f"\t\t\t{full_date} &nbsp;\n"
         code += f"\t\t\t<a href={subpage} target=\"_blank\">See Details</a> &nbsp;\n"
-        code += f"\t\t\t<a href=\"images/BW-{date}.jpg\" download=\"\">Download 4K</a>\n"
+        code += f"\t\t\t<a href=\"images/BW-{date}.jpg\" download=\"\">Download</a>\n"
         code += "\t\t</h5>\n"
         code += "\t</div>\n"
         return code
