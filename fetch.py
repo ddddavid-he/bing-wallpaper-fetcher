@@ -1,8 +1,3 @@
-"""
-By Ddddavid 
-2022-05-21
-"""
-
 import os
 import time
 import argparse
@@ -33,15 +28,6 @@ def notify(message):
     print(f'-> ({stime()}) {message}')
 
 
-def add2Backup(src):
-    if os.path.exists(f'{backup_dir}/{database}.bak'):
-        bak = pd.read_csv(f'{backup_dir}/{database}.bak', encoding='utf8')
-        bak = pd.concat([bak, src], axis=0)
-        bak.drop_duplicates(['date'], keep='first', inplace=True)
-    else:
-        bak = src
-    bak.to_csv(f'{backup_dir}/{database}.bak', index=False, encoding='utf8')
-    
 
 
 ap = argparse.ArgumentParser(description='Bing Wallpaper Fetcher')
@@ -51,9 +37,9 @@ ap.add_argument('--update', action='store_true', help='只更新数据库')
 ap.add_argument('--keep-cache', action='store_true', help='不删除临时文件')
 ap.add_argument('--no-image', action='store_true', help='不下载图片')
 ap.add_argument('--no-html', action='store_true', help='不生成网页')
+ap.add_argument('--no-fetch', action='store_true', help='不更新 source_list')
+ap.add_argument('--no-history', action='store_true', help='Caution! Stop using and overwrite existing source list.')
 ap.add_argument('--column-number', type=int, default=3, help='网页中一行的图片数')
-ap.add_argument('--no-history', action='store_true', help='Caution! Stop loading source list.')
-ap.add_argument('--no-backup', action='store_true', help='不备份数据库')
 ap.add_argument('--use-wget', action='store_true', help='使用系统wget下载数据')
 
 args = ap.parse_args()
@@ -99,13 +85,6 @@ if os.path.exists(cache_dir):
     ...
 else:
     os.makedirs(cache_dir)
-if os.path.exists(backup_dir):
-    if os.path.exists(f'{backup_dir}/html'):
-        ...
-    else:
-        os.makedirs(f'{backup_dir}/html')
-else:
-    os.makedirs(backup_dir)
 
 
 
@@ -123,63 +102,50 @@ if os.path.exists(database) and (not args.no_history):
     src = pd.read_csv(database, encoding='utf8')
     src = src[['date', 'title', 'url', 'description']]
 else:
+    if args.no_fetch:
+        raise FileNotFoundError("source_list.csv no found while using option --no-fetch.")
     src = pd.DataFrame({'date':[], 'url':[], 'description':[], 'title':[]})
-src['date'] = src['date'].apply(lambda x: int(x))
-
-
-
-## update database
-notify('request to bing.com sent')
-response = re.get(re_url).json()
-img_jss = response['images']
-
-notify('response from bing.com received')
-
-
-
-new_list = {'date':[], 'title':[], 'url':[], 'description':[]}
-
-for img_js in img_jss:
-    new_list['date'].append(img_js['enddate'])
-    new_list['title'].append(img_js['title'])
-    new_list['url'].append(f"{url_base}{img_js['urlbase']}_UHD.jpg")
-    new_list['description'].append(img_js['copyright'])
-new_list = pd.DataFrame(new_list)
-new_list = new_list[['date', 'title', 'url', 'description']]
-new_list['date'] = new_list['date'].apply(lambda x: int(x))
-
-
-for row in range(new_list.shape[0]):
-    if new_list['date'][row] in src['date'].unique():
-        new_list.drop(row, inplace=True)
-# new_list.reset_index(drop=True, inplace=True)
-src = pd.concat([src, new_list], axis=0)
-# src.reset_index(drop=True, inplace=True)
+    src['date'] = src['date'].apply(lambda x: int(x))    
     
-src.sort_values('date', ascending=False, inplace=True, ignore_index=True)
-src.reset_index(drop=True, inplace=True)
-src['date'] = src['date'].apply(lambda x: str(x))
-nc = new_list.shape[0]
-notify(f"{nc} new item{'s' if nc>1 else ''} added")
-# newer one at the front
 
-if not args.no_backup:
-    add2Backup(src) # backup old src
-    notify('backup done')
-# prune items older than one year
-y_now = int(src['date'][0])
-oc = 0
-for row in range(src['date'].size):
-    if int(src['date'][row]) - y_now > 1:
-        src.drop(row, inplace=True)
-        oc += 1
-    else:
-        ...
-src.reset_index(drop=True, inplace=True)
-notify(f"{oc} outdated item{'s' if oc>1 else ''} pruned")
-src.to_csv(database, index=False, encoding='utf8')
-notify(f"new source list saved, {nc} item{'s' if nc>1 else ''} added")
+if not args.no_fetch:    
+    ## update database
+    notify('request to bing.com sent')
+    response = re.get(re_url).json()
+    img_jss = response['images']
 
+    notify('response from bing.com received')
+
+
+    new_list = {'date':[], 'title':[], 'url':[], 'description':[]}
+
+    for img_js in img_jss:
+        new_list['date'].append(img_js['enddate'])
+        new_list['title'].append(img_js['title'])
+        new_list['url'].append(f"{url_base}{img_js['urlbase']}_UHD.jpg")
+        new_list['description'].append(img_js['copyright'])
+    new_list = pd.DataFrame(new_list)
+    new_list = new_list[['date', 'title', 'url', 'description']]
+    new_list['date'] = new_list['date'].apply(lambda x: int(x))
+
+
+    for row in range(new_list.shape[0]):
+        if new_list['date'][row] in src['date'].unique():
+            new_list.drop(row, inplace=True)
+    src = pd.concat([src, new_list], axis=0)
+    
+    src.sort_values('date', ascending=False, inplace=True, ignore_index=True)
+    src.reset_index(drop=True, inplace=True)
+    src['date'] = src['date'].apply(lambda x: str(x))
+    nc = new_list.shape[0]
+    notify(f"{nc} new item{'s' if nc>1 else ''} added")
+    # newer one at the front
+
+    src.to_csv(database, index=False, encoding='utf8')
+    notify(f"new source list saved, {nc} item{'s' if nc>1 else ''} added")
+else:
+    notify("Skipped source_list updating. Use existing source_list.")
+    src['date'] = src['date'].apply(lambda x: str(x))
 
 
 ## download images
@@ -217,9 +183,6 @@ if html_on:
             f.write(hg.subpages[key])
             
     if num > 0:
-        fo.rm(f'{backup_dir}/html/*.html')
-        fo.mv(f'{subpages_dir}/*.html', f'{backup_dir}/html/')
-        fo.mv(f'wallpaper/index.html', f'{backup_dir}/html/')
         fo.cp(f'{cache_dir}/index.html', f'wallpaper/')
         fo.cp(f'{cache_dir}/page-*.html', f'{subpages_dir}/')
         

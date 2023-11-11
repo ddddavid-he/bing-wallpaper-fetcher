@@ -19,5 +19,5 @@
 - `--update` 参数作用同上，只更新 `source_list.csv` 文件
 - **如果使用 `--no-cache` 参数 会删除`source_list` 文件并重新生成数据库，会丢失所有超过十天的数据。小心使用**！
 - `--use-wget` 使用系统提供的wget程序下载图片，如果没有这个参数程序使用Python的request包进行下载。
-- `--no-bakup`阻止程序进行备份步骤，备份文件为 `source_list.csv.bak`
+- `--no-fetch`阻止程序更新source_list，只使用现有的 `source_list.csv`文件进行操作。
 - 其他参数用法可从参数名推测

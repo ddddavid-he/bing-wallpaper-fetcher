@@ -19,5 +19,5 @@ Automatically download bing wallpaper at a resolution of 4K+
 - `--update` updates the `source_list.csv` files and performs backup without downloading images and generating html files
 - ***using `--no-cache` option will DELETEs and rebuilds the `source_list` file. BE CAREFUL WHEN USING THIS OPTION!***
 - `--use-wget` option will use wget tool in system instead of Python requests package
-- `--no-bakup` option stops it from reading and writing `source_list.csv.bak`
+- `--no-fetch` option stops it from updating `source_list.csv`. The program will only read existing source_list (if it do).
 - other parameters works as what their name indicates
