@@ -10,10 +10,9 @@
 ## 环境要求
 - Python 3
 - Python 包： requests、argparse、pandas
-- `auto_fetch.sh` `start` and `stop` 三个脚本只适用于  Linux 和 macOS
 
 ## 使用方法
-- 直接运行命令 `python3 fetch.py` 即可一步完成下载图片、生成html
+- 直接运行命令 `python3 main.py` 即可一步完成下载图片、生成html
 - `HTMLGenerator.py` 文件提供生成壁纸画廊网页的工具， 如果不需要生成网页文件运行上述命令时添加参数 `--no-html` 或 `--image-only`
 - 当使用参数 `--no-image` 和  `--no-html`时，程序只更新`source_list.csv` 文件（保存历史所有图片链接的数据库）   
 - `--update` 参数作用同上，只更新 `source_list.csv` 文件

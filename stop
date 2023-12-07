@@ -1,6 +1,0 @@
-#!/bin/bash
-
-kill `tail -1 pid.txt`
-
-
-
