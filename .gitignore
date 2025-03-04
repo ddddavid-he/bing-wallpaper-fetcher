@@ -1,9 +1,9 @@
 **/.DS_Store
 **/*.html
 **/img_cache*
-backup/*
+backup
 wallpaper
-cache/*
+cache
 __pycache__
 
 
