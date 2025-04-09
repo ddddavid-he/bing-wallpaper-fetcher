@@ -1,22 +1,25 @@
-# bing-wallpaper-fetcher
+# Bing Wallpaper Fetcher
+
 <p align="center">
-    <a href="README_ZH.md"> 中文文档见此 </a>
+    <a href="README_ZH.md">中文文档</a>
 </p>
 
-Automatically download bing wallpaper at a resolution of 4K+ 
+A tool to automatically download Bing wallpapers in 4K+ resolution.
 
-***Some images may have a resolution of 1080p***
+> **Note:** Some images may only be available in 1080p due to Bing's limitations.
 
-## Requirments
+---
+
+## Requirements
 - Python 3
-- Python packages:  requests, argparse, pandas
+- Python packages: `requests`, `argparse`, `pandas`
 
 ## Usage
-- running `python3 main.py` does everything
-- `HTMLGenerator.py` file creates webpages for the wallpapers, to avoid that, use `--no-html` or `--image-only`
-- by using `--no-image` along with  `--no-html`, the script updates `source_list.csv` only   
-- `--update` updates the `source_list.csv` files and performs backup without downloading images and generating html files
-- ***using `--no-cache` option will DELETEs and rebuilds the `source_list` file. BE CAREFUL WHEN USING THIS OPTION!***
-- `--use-wget` option will use wget tool in system instead of Python requests package
-- `--no-fetch` option stops it from updating `source_list.csv`. The program will only read existing source_list (if it do).
-- other parameters works as what their name indicates
+- Run `python3 main.py` to download images and generate the HTML gallery.
+- To skip HTML generation, add `--no-html` or `--image-only`.
+- To only update the `source_list.csv` database without downloading images or generating HTML, use both `--no-image` and `--no-html`.
+- The `--update` option updates `source_list.csv` and creates a backup without downloading images or generating HTML.
+- **Warning:** Using `--no-cache` will **delete** and rebuild the `source_list.csv` database, resulting in loss of history. Use with caution!
+- The `--use-wget` option uses the system's `wget` tool instead of Python's `requests` package for downloading.
+- The `--no-fetch` option prevents updating `source_list.csv` and uses the existing file.
+- Other parameters are self-explanatory based on their names.

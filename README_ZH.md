@@ -1,22 +1,25 @@
-# bing-wallpaper-fetcher
-<p align='center'>
-    <a href="README.md"> English Document Here </a>
+# Bing壁纸下载工具
+
+<p align="center">
+    <a href="README.md">English Documentation</a>
 </p>
 
-以4K分辨率下载Bing壁纸的工具
+一个自动下载4K分辨率Bing壁纸的工具。
 
-***有些壁纸仅有1080p的分辨率，是Bing网站的限制所致***
+> **注意：** 由于Bing的限制，部分壁纸可能只有1080p分辨率。
+
+---
 
 ## 环境要求
 - Python 3
-- Python 包： requests、argparse、pandas
+- Python库：`requests`、`argparse`、`pandas`
 
 ## 使用方法
-- 直接运行命令 `python3 main.py` 即可一步完成下载图片、生成html
-- `HTMLGenerator.py` 文件提供生成壁纸画廊网页的工具， 如果不需要生成网页文件运行上述命令时添加参数 `--no-html` 或 `--image-only`
-- 当使用参数 `--no-image` 和  `--no-html`时，程序只更新`source_list.csv` 文件（保存历史所有图片链接的数据库）   
-- `--update` 参数作用同上，只更新 `source_list.csv` 文件
-- **如果使用 `--no-cache` 参数 会删除`source_list` 文件并重新生成数据库，会丢失所有超过十天的数据。小心使用**！
-- `--use-wget` 使用系统提供的wget程序下载图片，如果没有这个参数程序使用Python的request包进行下载。
-- `--no-fetch`阻止程序更新source_list，只使用现有的 `source_list.csv`文件进行操作。
-- 其他参数用法可从参数名推测
+- 运行 `python3 main.py`，即可下载壁纸并生成画廊网页。
+- 若不需要生成网页，可添加参数 `--no-html` 或 `--image-only`。
+- 若只想更新 `source_list.csv` 数据库而不下载图片或生成网页，需同时添加 `--no-image` 和 `--no-html`。
+- 使用 `--update` 参数将更新 `source_list.csv` 并备份，不会下载图片或生成网页。
+- **警告：** 使用 `--no-cache` 会**删除**并重建 `source_list.csv` 数据库，历史数据将丢失，请谨慎操作！
+- `--use-wget` 参数会调用系统的 `wget` 工具下载图片，否则默认使用Python的 `requests` 库。
+- `--no-fetch` 参数会阻止更新 `source_list.csv`，仅使用已有的数据库文件。
+- 其他参数可根据名称理解用途。
